@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CatFace } from '../models/cate-face.model';
+import { CatFacesService } from '../services/cat-faces.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cat-face',
@@ -6,17 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cat-face.component.scss']
 })
 export class CatFaceComponent implements OnInit {
-  title!: string;
-  description!: string;
-  createdDate!: Date;
-  snaps!: number;
-  imageUrl!: string;
+  @Input() catFace!: CatFace;
+  buttonText!: string;
+
+  constructor(private catFacesService: CatFacesService, private router: Router) { }
 
   ngOnInit() {
-    this.title = 'Capucine';
-    this.description = 'It was born an orphan. My daughter pushed me to adopt it! I don\'t regret that at all. Cute, isn\'t it ?';
-    this.createdDate = new Date();
-    this.snaps = 6;
-    this.imageUrl = 'https://mymodernmet.com/wp/wp-content/uploads/archive/JDjWgH0FbyyK8yq-TCaI_Coby10.jpeg';
+    this.buttonText = 'So cute !';
+  }
+
+  onSnap() {
+    if (this.buttonText == 'So cute !') {
+      this.catFacesService.snapCatFaceById(this.catFace.id, 'snap');
+      this.buttonText = 'Not that cute !'
+    } else {
+      this.catFacesService.snapCatFaceById(this.catFace.id, 'unsnap');
+      this.buttonText = 'So cute !';
+    }
+  }
+
+  onViewCatFace() {
+    this.router.navigateByUrl(`catfaces/${this.catFace.id}`);
   }
 }

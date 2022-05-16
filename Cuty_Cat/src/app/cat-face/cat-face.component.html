@@ -1,7 +1,12 @@
-<div class="cuty-cat-card">
-    <h2>{{ title }}</h2>
-    <p>{{ description }}</p>
-    <img [src]="imageUrl" [alt]="title">
-    <p>Put online {{ createdDate }}</p>
-    <p>{{ snaps }}</p>
+<div class="cuty-cat-card" [ngClass]="{ snapped: buttonText === 'Not that cute !' }">
+    <h2>{{ catFace.title | uppercase}}</h2>
+    <div class="container">
+        <div class="toAdopt">
+            <p *ngIf="catFace.orphan === 1" >An orphan cat that you can adopt by clicking below.</p>
+            
+            <p *ngIf="!catFace.orphan" >A cuty cat who already has a family. You can see how cute it is by clicking below.</p>
+        </div>
+        <img [src]="catFace.imageUrl" [alt]="catFace.title">
+    </div>
+    <button (click)="onViewCatFace()">VIEW</button>
 </div>

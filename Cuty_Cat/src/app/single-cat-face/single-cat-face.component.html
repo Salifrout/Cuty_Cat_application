@@ -1,0 +1,12 @@
+<div class="cuty-cat-card" [ngClass]="{ snapped: buttonText === 'Not that cute !' }">
+    <h2>{{ catFace.title | uppercase}}</h2>
+    <a routerLink="/catfaces">BACK</a>
+    <p>{{ catFace.description }}</p>
+    <img [src]="catFace.imageUrl" [alt]="catFace.title">
+    <p>Put online {{ catFace.createdDate | date: 'longDate' }}</p>
+    <p>
+        <span [ngStyle]="{ color: 'rgb(0, ' + (catFace.snaps * 4) + ', 0)' }">🐱 {{ catFace.snaps }}</span>
+        <button (click)="onSnap()">{{ buttonText }}</button>
+    </p>
+    <p *ngIf="catFace.orphan === 1" >I am searching for a family to live with. Do you want to adopt me ?</p>
+</div>
